@@ -1,7 +1,5 @@
-Visualizations
-==============
 
-Samples of visualization add-ons to QRadar, utilizing public REST APIs
+This repository contains samples of visualization add-ons to QRadar, utilizing public REST APIs
 
 offense_visualizer
 ==============
