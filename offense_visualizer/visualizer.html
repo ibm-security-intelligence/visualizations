@@ -1,0 +1,168 @@
+<!--
+
+This API example is based on the scatter.html example that ships with the nvd3
+library, located at https://github.com/novus/nvd3 on June 20, 2014
+
+Copyright (c) 2014, IBM
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
+this file except in compliance with the License. You may obtain a copy of the 
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed 
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
+CONDITIONS OF ANY KIND, either express or implied. See the License for the 
+specific language governing permissions and limitations under the License.
+
+-->
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="d3.v3.min.js"></script>
+<script src="nv.d3.js"></script>
+
+<link href="nv.d3.css" rel="stylesheet">
+
+<style>
+
+body {
+  overflow-y:scroll;
+  margin: 0;
+  padding: 0;
+  font-family: Tahoma, sans-serif;
+  font-size: 10pt;
+}
+
+svg {
+  overflow: hidden;
+}
+
+div {
+  border: 0;
+  margin: 0;
+}
+
+strong {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#graphTitle {
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 0.5em;
+}
+
+#graph {
+  margin: 0;
+  float: left;
+}
+
+#graph svg {
+  height: 500px;
+  width: 1000px;
+}
+
+#configure {
+  float: left;
+  border-left: 1px solid #090909;
+  margin-left: 1em;
+  padding-left: 1em;
+}
+
+#configure h1 {
+  display: block;
+  font-size: 1.2em;
+}
+
+#configure h2 {
+  display: block;
+  font-size: 1em;
+}
+
+#configure select {
+
+}
+
+#piechart {
+  float: bottom;
+  
+}
+
+#piechart svg {
+  height: 300px;
+}
+
+circle {
+  cursor: pointer;
+}
+
+div.tooltip  h2 {
+	font-size: 1em;
+	font-family: Tahoma, sans-serif;
+	text-align: left;
+}
+</style>
+
+<body>
+<div id="main">
+  <div id="graphTitle">Offense Visualizer</div>
+  <div id="graph" class='with-3d-shadow with-transitions'>
+    <svg></svg>
+  </div>
+  <div id="configure" class='with-3d-shadow with-transitions'>
+    <h1>Graph Options</h1>
+    <h2>X Axis</h2>
+    <select id="xAxis" onchange="reloadGraph()">
+	<option value="start_time">Start Time</option>
+	<option value="last_updated_time">Last Updated Time</option>
+	<option value="event_count">Log Count</option>
+	<option value="flow_count" >Flow Count</option>
+	<option value="source_count">Source Count</option>
+	<option value="destination_count" selected="true">Destination Count</option>
+	<option value="username_count">Username Count</option>
+	<option value="category_count">Category Count</option>
+	<option value="magnitude">Magnitude</option>
+	<option value="credibility">Credibility</option>
+	<option value="severity">Severity</option>
+	<option value="relevance">Relevance</option>
+     </select>
+     <h2>Y Axis</h2>
+     <select id="yAxis" onchange="reloadGraph()">
+	<option value="start_time">Start Time</option>
+	<option value="last_updated_time">Last Updated Time</option>
+	<option value="event_count" selected="true">Log Count</option>
+	<option value="flow_count">Flow Count</option>
+	<option value="source_count">Source Count</option>
+	<option value="destination_count">Destination Count</option>
+	<option value="username_count">Username Count</option>
+	<option value="category_count">Category Count</option>
+	<option value="magnitude">Magnitude</option>
+	<option value="credibility">Credibility</option>
+	<option value="severity">Severity</option>
+	<option value="relevance">Relevance</option>
+     </select>
+     <h2>Size</h2>
+     <select id="zAxis" onchange="reloadGraph()">
+	<option value="magnitude" selected="true">Magnitude</option>
+	<option value="credibility">Credibility</option>
+	<option value="severity">Severity</option>
+	<option value="relevance">Relevance</option>
+     </select>
+     <h2>Colorization</h2>
+     <select id="cAxis" onchange="reloadGraph()">
+	<option value="offense_type">Offense Type</option>
+	<option selected="true"value="offense_category">Offense Category</option>
+     </select>
+     
+     <div id="piechart" class='with-3d-shadow with-transitions'>
+	<svg></svg>
+     </div>
+  </div>
+  <div style="clear:both"></div>
+</div>
+
+<script src="visualizer.js"></script>
+
+</body>
+</html>
