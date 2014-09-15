@@ -33,7 +33,7 @@ function getValue( offense, attribute )
 
 function reloadGraph()
 {
-	var token = document.cookie.split("; SEC=").pop().split(";").shift();
+ 	var token = document.cookie.split("; SEC=").pop().split(";").shift();
 	var xhr = d3.xhr( "/restapi/api/siem/offenses" , "application/json");
 	
 	xhr.header('Accept', "application/json");
@@ -57,7 +57,16 @@ function reloadGraph()
 			var startTime = [Number.MAX_VALUE,0];
 			var lastUpdated = [Number.MAX_VALUE,0];
 			var offenseMap = {};
-			
+
+			// Added for OSM
+			var offenseIpMap = [];
+			var map = L.map('map');
+			map.setView([35.40, 139.50], 2);
+
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+
 			for (i = 0; i < offenses.length; ++i) {
 				var offense = offenses[i];
 				var typeValue = ( cAttribute == "offense_type" ? offense[ cAttribute ] + "" : offense.categories[0] );
@@ -84,9 +93,11 @@ function reloadGraph()
 				s = s.replace(/[^\w]/g,"_");
 
 				offenseMap[ getValue( offense, xAttribute ) + "_" + getValue( offense, yAttribute ) + "_" + s ] = offense;
+				// Added for OSM
+				offenseIpMap[ getValue( offense, "offense_source" ) ] = offense;
 				
 				startTime = [ Math.min( startTime[0], offense.start_time ), Math.max( startTime[1], offense.startTime ) ];
-				lastUpdated = [ Math.min( lastUpdated[0], offense.last_updated_time ), Math.max( lastUpdated[1], offense.last_updated_time ) ];
+				lastUpdated = [ Math.min( lastUpdated[0], offense.last_updated_time ), Math.max( lastUpdated[1], offense.last_updated_time ) ];			
 			}
 			
 			var pieData = [];
@@ -198,8 +209,39 @@ function reloadGraph()
 
 				return chart;
 			});
+
+			// Added for OSM
+			for( geoip in offenseIpMap ) {
+				var ip = getValue (offenseIpMap[geoip], "offense_source");
+				
+				if( ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/) ) {
+					// console.log( offenseIpMap[geoip] );
+					d3.json('https://freegeoip.net/json/' + ip, 
+						function (error,data) {
+							if (typeof data !== 'undefined') {
+								console.log(data);
+								
+								var offense = offenseIpMap[data.ip];
+								console.log(offense);
+								
+								L.marker([data.latitude, data.longitude]).addTo(map)
+									.bindPopup('<div class="tooltip"><h2>Offense ' + 
+									'<a href="' + '/console/do/sem/offensesummary?summaryId=' + offense.id +
+									'&appName=SEM&pageId=OffenseSummary' + '" target="_blank">' + offense.id +
+									'</a> - ' + offense.description.replace("\n", "<br/>&nbsp;&nbsp;") + 
+									"<br/><table><tr><th>Magnitude:</th><td>" + offense.magnitude + "</td></tr>" +
+									"<tr><th>Credibility:</th><td>" + offense.credibility + "</td></tr>" +
+									"<tr><th>Severity:</th><td>" + offense.severity + "</td></tr>" +
+									"<tr><th>Relevance:</th><td>" + offense.relevance + "</td></tr>" +
+									"</table></h2>");
+							}
+							else {
+								// console.log("response is 'undefined'");
+							}
+						}
+					);
+				}
+			}
 		}
 	);
 }
-
-window.onload = reloadGraph;

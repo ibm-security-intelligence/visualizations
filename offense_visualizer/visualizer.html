@@ -1,7 +1,8 @@
 <!--
 
 This API example is based on the scatter.html example that ships with the nvd3
-library, located at https://github.com/novus/nvd3 on June 20, 2014
+library, located at https://github.com/novus/nvd3 on June 20, 2014. Map is provided
+by Leaflet library, http://leafletjs.com/
 
 Copyright (c) 2014, IBM
 
@@ -18,9 +19,15 @@ specific language governing permissions and limitations under the License.
 <!DOCTYPE html>
 <meta charset="utf-8">
 
+<head>
 <script src="d3.v3.min.js"></script>
 <script src="nv.d3.js"></script>
 
+<script src="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+
+<script src="visualizer.js"></script>
+<link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <link href="nv.d3.css" rel="stylesheet">
 
 <style>
@@ -102,67 +109,154 @@ div.tooltip  h2 {
 	font-family: Tahoma, sans-serif;
 	text-align: left;
 }
+
+#map {
+  height: 500px;
+  width: 1000px;
+  margin: 0px;
+}
+
+.tabContent
+{
+	visibility:hidden;
+	position: absolute;
+	top: 69px;
+	border: 1px solid black;
+}
+
+#tabStrip
+{
+	position: absolute;
+	top: 40px;
+	height: 20px;
+}
+
+#tabStrip .tab
+{
+	float:left;
+	font-weight: bold;
+	color: white;
+	background-color: #999999;
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 6px;
+	padding-left: 4em;
+	width: 150px;
+	cursor: pointer;
+}
+
 </style>
+<script>
 
-<body>
+var focusedTab = null;
+
+function loadTabs()
+{
+	var strip = document.getElementById("tabStrip");
+	for( var i = 0; i < strip.childNodes.length; ++i )
+	{
+		var tab = strip.childNodes[i];
+		if( tab.className == "tab" )
+		{
+			var content = document.getElementById( tab.getAttribute("tab") );
+			tab.innerHTML = content.getAttribute("title");
+
+			if( focusedTab == null )
+			{
+				focusedTab = tab;
+				content.style.visibility = "visible";
+				tab.style.color = "black";
+				tab.style.backgroundColor = "white";
+			}
+		}
+	}
+}
+
+function clickTab(tab)
+{
+	if( tab == focusedTab )
+		return;
+
+	var content = document.getElementById( tab.getAttribute("tab") );
+	content.style.visibility = "visible";
+	tab.style.color = "black";
+	tab.style.backgroundColor = "white";
+
+	content = document.getElementById( focusedTab.getAttribute("tab") );
+	content.style.visibility = "hidden";
+	focusedTab.style.color = "white";
+	focusedTab.style.backgroundColor = "#999999";
+
+	focusedTab = tab;
+}
+</script>
+</head>
+<body onload="loadTabs();reloadGraph()">
 <div id="main">
-  <div id="graphTitle">Offense Visualizer</div>
-  <div id="graph" class='with-3d-shadow with-transitions'>
-    <svg></svg>
-  </div>
-  <div id="configure" class='with-3d-shadow with-transitions'>
-    <h1>Graph Options</h1>
-    <h2>X Axis</h2>
-    <select id="xAxis" onchange="reloadGraph()">
-	<option value="start_time">Start Time</option>
-	<option value="last_updated_time">Last Updated Time</option>
-	<option value="event_count">Log Count</option>
-	<option value="flow_count" >Flow Count</option>
-	<option value="source_count">Source Count</option>
-	<option value="destination_count" selected="true">Destination Count</option>
-	<option value="username_count">Username Count</option>
-	<option value="category_count">Category Count</option>
-	<option value="magnitude">Magnitude</option>
-	<option value="credibility">Credibility</option>
-	<option value="severity">Severity</option>
-	<option value="relevance">Relevance</option>
-     </select>
-     <h2>Y Axis</h2>
-     <select id="yAxis" onchange="reloadGraph()">
-	<option value="start_time">Start Time</option>
-	<option value="last_updated_time">Last Updated Time</option>
-	<option value="event_count" selected="true">Log Count</option>
-	<option value="flow_count">Flow Count</option>
-	<option value="source_count">Source Count</option>
-	<option value="destination_count">Destination Count</option>
-	<option value="username_count">Username Count</option>
-	<option value="category_count">Category Count</option>
-	<option value="magnitude">Magnitude</option>
-	<option value="credibility">Credibility</option>
-	<option value="severity">Severity</option>
-	<option value="relevance">Relevance</option>
-     </select>
-     <h2>Size</h2>
-     <select id="zAxis" onchange="reloadGraph()">
-	<option value="magnitude" selected="true">Magnitude</option>
-	<option value="credibility">Credibility</option>
-	<option value="severity">Severity</option>
-	<option value="relevance">Relevance</option>
-     </select>
-     <h2>Colorization</h2>
-     <select id="cAxis" onchange="reloadGraph()">
-	<option value="offense_type">Offense Type</option>
-	<option selected="true"value="offense_category">Offense Category</option>
-     </select>
-     
-     <div id="piechart" class='with-3d-shadow with-transitions'>
-	<svg></svg>
-     </div>
-  </div>
-  <div style="clear:both"></div>
+	<div id="graphTitle">Offense Visualizer</div>
+	<div id="tabStrip">
+		<div onclick="clickTab(this)" class="tab" tab="bubbleTab"></div>
+		<div onclick="clickTab(this)" class="tab" tab="mapTab"></div>
+		<div style="clear:both;"></div>
+	</div>
+	<div id="bubbleTab" class="tabContent" title="Bubble Chart" selected="true">
+		<div id="graph" class='with-3d-shadow with-transitions'>
+			<svg></svg>
+		</div>  
+		<div id="configure" class='with-3d-shadow with-transitions'>
+			<h1>Graph Options</h1>
+			<h2>X Axis</h2>
+			<select id="xAxis" onchange="reloadGraph()">
+				<option value="start_time">Start Time</option>
+				<option value="last_updated_time">Last Updated Time</option>
+				<option value="event_count">Log Count</option>
+				<option value="flow_count" >Flow Count</option>
+				<option value="source_count">Source Count</option>
+				<option value="destination_count" selected="true">Destination Count</option>
+				<option value="username_count">Username Count</option>
+				<option value="category_count">Category Count</option>
+				<option value="magnitude">Magnitude</option>
+				<option value="credibility">Credibility</option>
+				<option value="severity">Severity</option>
+				<option value="relevance">Relevance</option>
+			</select>
+			<h2>Y Axis</h2>
+			<select id="yAxis" onchange="reloadGraph()">
+				<option value="start_time">Start Time</option>
+				<option value="last_updated_time">Last Updated Time</option>
+				<option value="event_count" selected="true">Log Count</option>
+				<option value="flow_count">Flow Count</option>
+				<option value="source_count">Source Count</option>
+				<option value="destination_count">Destination Count</option>
+				<option value="username_count">Username Count</option>
+				<option value="category_count">Category Count</option>
+				<option value="magnitude">Magnitude</option>
+				<option value="credibility">Credibility</option>
+				<option value="severity">Severity</option>
+				<option value="relevance">Relevance</option>
+			</select>  
+			<h2>Size</h2>
+			<select id="zAxis" onchange="reloadGraph()">
+				<option value="magnitude" selected="true">Magnitude</option>
+				<option value="credibility">Credibility</option>
+				<option value="severity">Severity</option>
+				<option value="relevance">Relevance</option>
+			</select>
+			<h2>Colorization</h2>
+			<select id="cAxis" onchange="reloadGraph()">
+				<option value="offense_type">Offense Type</option>
+				<option selected="true"value="offense_category">Offense Category</option>
+			</select>
+			
+			<div id="piechart" class='with-3d-shadow with-transitions'>
+				<svg></svg>
+			</div>
+		</div>
+		<div style="clear:both"></div>
+	</div>
+	<div id="mapTab" class="tabContent" title="Attack Map" selected="true">
+		<div id="map"></div>
+	</div>
 </div>
-
-<script src="visualizer.js"></script>
-
 </body>
 </html>
