@@ -61,7 +61,7 @@ function reloadGraph()
 			// Added for OSM
 			var offenseIpMap = [];
 			var map = L.map('map');
-			map.setView([35.40, 139.50], 2);
+			map.locate({ setView: true, maxZoom:2 });
 
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
