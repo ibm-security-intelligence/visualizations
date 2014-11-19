@@ -63,8 +63,8 @@ function reloadGraph()
 			var map = L.map('map');
 			map.locate({ setView: true, maxZoom:2 });
 
-			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map);
 
 			for (i = 0; i < offenses.length; ++i) {
