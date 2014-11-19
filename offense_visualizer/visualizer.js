@@ -33,7 +33,7 @@ function getValue( offense, attribute )
 
 function reloadGraph()
 {
- 	var token = document.cookie.split("; SEC=").pop().split(";").shift();
+ 	var token = document.cookie.split("SEC=").pop().split(";").shift();
 	var xhr = d3.xhr( "/restapi/api/siem/offenses" , "application/json");
 	
 	xhr.header('Accept', "application/json");
