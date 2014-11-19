@@ -61,6 +61,7 @@ function reloadGraph()
 			// Added for OSM
 			var offenseIpMap = [];
 			var map = L.map('map');
+			map.remove();
 			map.locate({ setView: true, maxZoom:2 });
 
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
