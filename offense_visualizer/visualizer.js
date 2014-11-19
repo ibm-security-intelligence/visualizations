@@ -60,6 +60,7 @@ function reloadGraph()
 
 			// Added for OSM
 			var offenseIpMap = [];
+			document.getElementById('mapTab').innerHTML = "<div id='map'></div>";
 			var map = L.map('map');
 			map.locate({ setView: true, maxZoom:2 });
 
