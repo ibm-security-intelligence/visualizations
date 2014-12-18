@@ -34,11 +34,15 @@ function getValue( offense, attribute )
 function reloadGraph()
 {
  	var token = document.cookie.split("SEC=").pop().split(";").shift();
-	var xhr = d3.xhr( "/restapi/api/siem/offenses" , "application/json");
+	
+	//Get offenses updated in the last 24 hours, maximum 100 results
+	var xhr = d3.xhr( "/restapi/api/siem/offenses?filter=last_updated_time+%3E+" + ( ( new Date() ).getTime() - 86400000 ) , "application/json");
 	
 	xhr.header('Accept', "application/json");
 	xhr.header('SEC', token);
-	
+	xhr.header('Version', '3.0');
+	xhr.header('Range', 'items=1-100');
+
 	xhr.get( 
 		function (error,response)
 		{
