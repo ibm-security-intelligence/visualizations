@@ -8,3 +8,7 @@ Any issues discovered using the samples should not be directed to QRadar support
 offense_visualizer
 ==============
 A visualization that runs in a web browser, showing an interactive bubble chart of offenses
+
+excel
+=====
+Ability to execute an advanced query directly from excel and have the results come back into excel
