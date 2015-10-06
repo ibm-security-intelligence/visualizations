@@ -1,5 +1,5 @@
 # ABOUT
-This tool allows you to visualize all of the incidicents (offenses) on your QRadar installation. Each bubble represents an incidicent. The size and color of the bubble indicates the magnitude of the incident. Lines dawn between the incidents indicate there are shared IP addreses among the linked incidents. 
+This tool allows you to visualize all of the incidents (offenses) on your QRadar installation. Each bubble represents an incident. The size and color of the bubble indicates the magnitude of the incident. Lines dawn between the bubbles indicate there are shared IP addresses among the linked incidents. 
 
 Clicking on an incident bubble allows you to see details of that incident at a glance.
 
@@ -218,7 +218,7 @@ You need to compile the source code into a war file for Liberty to serve.
 gradle build
 ```
 
-This will create a war file in build/libs/offense-viz.war
+This will create a war file in build/libs/incident-overview.war
  
  
 ## INSTALL THE VISUALIZATION TO LIBERTY
