@@ -1,0 +1,523 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+	margin-bottom: 5px;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/************ END RESET ****************/
+
+/**** TIPSY OVERRIDE ***/
+.tipsy { font-size: 16px !important;} 
+/**** NO DATA Alignment fix ****/
+
+::-webkit-scrollbar
+{
+  width: 12px;  /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#visTitle
+{
+	margin-left: 10px;
+	margin-top: 10px;
+	font-size: 30px;
+}
+
+ #titlebar
+ {
+ 	margin-top: 10px;
+ 	background-color:#1A2830;
+ 	color: #FFFFFF;
+ 	height: 60px;
+ }
+
+.producttitle
+{
+	width: auto;
+	padding-left: 20px;
+	padding-right: 40px;
+	
+	padding-top: 24px;
+	
+	margin: 0;
+	font-size: 12px;
+	font-weight: lighter;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	background-color: #1A2830;
+	white-space: nowrap;
+} 
+
+.producttitle a
+{ 
+	cursor: pointer;
+	text-decoration: none;
+	color: #fafafa;
+	padding-bottom: 0;
+}
+
+#flourishTrack
+{
+	border-width: 1px 0 0 0;
+	border-color: black;
+	border-style: solid;
+}
+
+#flourishTrack #flourish
+{
+	top: -1px;
+}
+
+/*******************************************
+*   RIGHT HAND SIDE CONTENT
+*********************************************/
+.feedBarContainer
+{
+	position: absolute;
+	right: 0;
+	top: 0;	
+	
+	/*background: 0 0 repeat, #E8E8E8;*/
+	height: 100%;
+	
+	overflow-y: auto;
+	over	w-x: hidden;
+	
+	float: right;
+	width: 275px;
+	
+	/*min-width:100px;*/
+	
+  	/*background: url(https://tisp.stage1.mybluemix.net/images/cross-pattern-lg.ae01f735.png) 0 0/160px 160px repeat,#f7f7f7;*/
+  	background-color: #eee;
+  	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0980392) 0px, rgba(0, 0, 0, 0) 6px, transparent 0px);
+}
+
+.feedBarContent
+{
+	padding: 10px;
+	display: inline-block;
+	width: 90%;
+}
+
+.smallChart
+{
+	margin-bottom: 20px;
+	padding: 10px;
+}
+
+.smallChart H1
+{
+	font-size: 14pt;
+	color: #000000;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;
+  	margin-bottom: 5px;
+}
+
+/******** OFFENSE VIS **************/
+#offenseReport
+{
+	background-color: #FEFEFE;
+	
+    z-index:100;
+    position:absolute;
+    right:-1030px;
+    
+    box-shadow: -5px 0px 5px 0px #888888;
+    
+    overflow-y: auto;
+
+    height: 100%;
+    
+    width: 99%;
+    max-width: 750px;
+}
+#offenseReport a
+{
+	color: #286090;
+}
+
+#assignedToUser
+{
+  width: 96px;
+  position: absolute;
+  right: 5px;
+  top: 60px;
+}
+
+#userName
+{
+	text-align: center;
+}
+.userNameAssigned
+{
+	color: #000000;
+}
+.userNameUnassigned
+{
+	color: #AAAAAA;
+}
+
+
+.discreteBar
+{
+	cursor: pointer;
+}
+
+#offenseCategories
+{
+	max-height: 200px;
+	overflow: auto;
+	
+}
+
+.offenseReportContents
+{
+	padding-bottom: 4px;
+}
+
+.offenseReportContentsRow
+{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.offenseReportContentsRow th
+{
+	text-align: left;
+	font-weight: 700;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	width: 130px;
+}
+
+.offenseReportContentsRow li
+{
+	padding-bottom: 8px;
+}
+
+.offenseReportContentsHeader
+{
+	position: relative;
+	min-height: 100px;
+	margin-left: 108px;
+}
+
+.offenseReportContents .paneTitle
+{
+	font-size: 10pt;
+	color: #AAAAAA;
+	padding-top: 10px;
+}
+
+.offenseReportContents H1
+{
+	margin-top: 10px; /* Don't overlap the 'investigate' button */
+	bottom: 0;
+	font-size: 18pt;
+	font-weight: bold;
+	margin-bottom: 5px;
+	max-width: 82%;
+}
+
+.offenseReportContents H2
+{
+	font-size: 16pt;
+	border-bottom: 2px solid #ccc;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.offenseReportContents .magnitudeContainer
+{
+	float: left;
+	width: 100px;
+	height: 100px; 
+	
+	margin-right: 8px;
+	margin-bottom: 8px;
+
+	background-color: #CCCCCC;
+	
+	color: white;
+
+	text-align: center;
+	vertical-align: middle;
+	
+	border-bottom: 5px solid #888888;
+}
+.magnitudeText
+{
+	padding-top: 7px;
+	display: block;
+}
+
+.magnitude
+{
+	font-size: 36pt;
+	display: block;
+	padding-top: 14px;
+}
+
+dl
+{
+    padding: 0.5em;
+}
+
+dt
+{
+    float: left;
+    clear: left;
+    width: 150px;
+    text-align: right;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+dd
+{
+    margin: 0 0 0 10px;
+    padding: 0 0 0.5em 0;
+  }
+
+#OffenseNotes
+{
+	max-height: 100px;
+	overflow: auto;	
+}
+
+#OffenseNotes ol li
+{
+	margin-bottom: 10px;
+}
+
+.offenseNoteAuthor
+{
+	font-size: 10pt;
+	color: #AAAAAA;
+	margin-right: 5px;
+	font-weight: bold;
+}
+.offenseNoteDate
+{
+	font-size: 10pt;
+	color: #AAAAAA;
+	margin-left: 5px;
+}
+/******** END OFFENSE VIS **************/
+
+
+
+
+body
+{
+	position: fixed;
+	background-color: #41484D;
+	font-family: Helvetica,Arial,sans-serif;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+html
+{
+	height: 100%;
+}
+
+#mainContentPane
+{
+	background-color: #FFFFFF;
+	margin:20px;
+	position: relative;
+	/*height:75%;*/
+	height: calc(100% - 150px);
+}
+
+
+#newsTickerDiv
+ {
+ 	margin-bottom: 10px;
+ 	background-color:#1A2830;
+ 	color: #FFFFFF;
+ 	height: 30px;
+ 	
+ 	padding-left: 20px;
+	padding-top: 12px;
+	overflow: hidden;
+ 	
+ }
+ 
+#newsTickerDiv H1
+{
+	color: #FFFFFF;
+	font-weight:bold;
+	display: inline;
+	float: left;
+	margin-right: 5px;
+}
+
+.newsTickerFeed
+{
+	overflow: hidden;
+}
+
+.newsTickerFeed li
+{
+	height: 60px;
+}
+.newsTickerFeed li a
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#timeSeriesWrapper
+{
+	width: calc(100% - 267px);
+	left: 0px;
+}
+
+#timeSlider
+{
+	width: calc(100% - 345px);
+	left: 35px;
+	margin: 0 auto; /*Center the time slider in the parent div */
+		
+}
+
+#timeSlider > svg {
+	height: 50px;
+}
+
+.tooltip
+{
+	z-index: 1;
+	position: absolute;
+	width: auto;
+	height: auto;
+	padding: 6px;
+	background-color: white;
+	opacity: 1;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+}
+
+.tooltip.hidden
+{ 
+	display: none;
+}
+
+/* clean up the nvd3 time sers graph on the bootom of the vis */
+#timeSeries > svg > g > g > g.nv-linesWrap > rect
+{
+	display:none;
+}
+
+.button
+{
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+}
+
+.investigateButton
+{
+	position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+}
+
+.clear {
+    clear: both;
+}
+
+/* Ensure the data point markers are always visible on the time sersies chart */
+.nv-point {
+    stroke-opacity: 1!important;
+    stroke-width: 5px!important;
+    fill-opacity: 1!important;
+}
+
+.OffenseText, #chart1vis .nv-slice {
+	cursor: pointer;
+}

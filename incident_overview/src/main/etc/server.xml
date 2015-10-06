@@ -1,0 +1,30 @@
+<server description="Offense Visualization Demo Server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jsp-2.2</feature>
+        <feature>localConnector-1.0</feature>
+    	<feature>jaxrs-1.1</feature>
+    	<feature>jdbc-4.0</feature>
+		<feature>jpa-2.0</feature>
+	</featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+
+    <applicationMonitor updateTrigger="mbean"/>
+
+    <logging consoleLogLevel="INFO"/>
+
+    <dataSource id="postgres" jdbcDriverRef="PostgresJDBCDriver" jndiName="jdbc/postgres" supplementalJDBCTrace="true" type="javax.sql.ConnectionPoolDataSource">
+    	<properties URL="jdbc:postgresql://localhost:5432/offenseviz" databaseName="offenseviz" password="{xor}LzAsKzgtOiw=" portNumber="5432" serverName="localhost" user="postgres"/>
+    </dataSource>
+
+    <jdbcDriver id="PostgresJDBCDriver" javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource" javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="postgresql-library"/>
+    
+    <library id="postgresql-library">       
+	    <fileset dir="/opt/wlp/lib" includes="postgresql-9.2-1002.jdbc4.jar"/>   
+	</library>
+
+    <webApplication id="offense-viz" location="offense-viz.war" name="offense-viz"/>
+</server>

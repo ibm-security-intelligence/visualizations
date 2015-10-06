@@ -1,0 +1,110 @@
+import org.gradle.plugins.ide.eclipse.model.Facet
+import groovy.xml.MarkupBuilder
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+jar.archiveName = "incident-overview.jar"
+
+eclipse{
+	wtp {
+		facet {
+			facet name: 'jst.java', type: Facet.FacetType.fixed
+			facet name: 'jst.web', type: Facet.FacetType.fixed
+		   	facet name: 'jst.java', version: '1.7'
+			facet name: 'jst.web', version: '3.0'
+			facet name: 'wst.jsdt.web', version: '1.0'
+			facet name: 'jpt.jpa', version: '2.0'
+			facet name: 'jst.jaxrs', version: '1.1'
+			
+			file {
+				withXml {
+					def node = it.asNode()
+					node.appendNode('runtime', [name: 'WebSphere Application Server Liberty Profile'])
+				}
+			}
+	    }
+
+        File facetPrefsFile = file('.settings/org.eclipse.wst.common.project.facet.core.prefs.xml')
+        facetPrefsFile.parentFile.mkdirs()
+	    def writer = new StringWriter()
+        def xml = new MarkupBuilder(writer)
+        xml.root() {
+            facet(id:'jpt.jpa') {
+                node(name:'libprov') {
+                    attribute(name:'provider-id', value:'jpa-no-op-library-provider')
+                }
+            }
+            facet(id:'jst.jaxrs') {
+                node(name:'libprov') {
+                    attribute(name:'provider-id', value:'com.ibm.ast.ws.jaxrs.liberty.library')
+                }
+            }
+        }
+        facetPrefsFile.write(writer.toString());
+        
+        File jptPrefsFile = file('.settings/org.eclipse.jpt.core.prefs')
+        jptPrefsFile.write('eclipse.preferences.version=1\n')
+        jptPrefsFile.append('org.eclipse.jpt.core.platform=eclipselink2_0\n')
+        jptPrefsFile.append('org.eclipse.jpt.jpa.core.discoverAnnotatedClasses=false\n')
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	providedCompile(
+		'javax.servlet:javax.servlet-api:3.1.0',
+		'javax.ws.rs:jsr311-api:1.1.1',
+		'javax.annotation:jsr250-api:1.0',
+		'org.apache.geronimo.specs:geronimo-jpa_2.0_spec:1.1'
+	)
+	compile(
+		'log4j:log4j:1.2.17',
+		'org.slf4j:slf4j-api:1.7.9',
+		'org.slf4j:slf4j-log4j12:1.7.9',
+		'org.apache.httpcomponents:httpclient:4.3.6',
+		'com.fasterxml.jackson.core:jackson-core:2.5.0',
+		'com.fasterxml.jackson.core:jackson-annotations:2.5.0',
+		'com.fasterxml.jackson.core:jackson-databind:2.5.0',
+		'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.5.0', 
+		'org.apache.commons:commons-lang3:3.0', 
+		'com.maxmind.geoip2:geoip2:2.1.0'
+	)
+}
+
+configurations {
+  	openjpac {
+		visible false
+	}
+}
+
+dependencies {
+  	openjpac (
+		'org.apache.openjpa:openjpa-all:2.2.1'
+	)
+}
+
+compileJava {
+	inputs.files "src/main/java/META-INF/persistence.xml"
+}
+compileJava << {
+	logger.info 'Enhancing JPA entities ...'
+	def pFile = file("src/main/resources/META-INF/persistence.xml")
+	if( pFile.exists() ) {
+		ant {
+			taskdef(name:'openjpac', classname:'org.apache.openjpa.ant.PCEnhancerTask', classpath:configurations.openjpac.asPath)
+			openjpac {
+				config (propertiesFile: pFile)
+				classpath {
+					sourceSets.main.java.srcDirs.findAll{ it.exists() }.each { pathelement(location: it) }
+					pathelement(location: sourceSets.main.output.classesDir)
+					pathelement(path: configurations.compile.asPath)
+				}
+			}
+		}
+	}
+}
