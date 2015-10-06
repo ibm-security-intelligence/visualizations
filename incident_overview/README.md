@@ -1,7 +1,9 @@
 # ABOUT
 This tool allows you to visualize all of the incidicents (offenses) on your QRadar installation. Each bubble represents an incidicent. The size and color of the bubble indicates the magnitude of the incident. Lines dawn between the incidents indicate there are shared IP addreses among the linked incidents. 
 
-Clicking on a incident bubble allows you to see details of that incident at a glance.
+Clicking on an incident bubble allows you to see details of that incident at a glance.
+
+![Alt text](screenshot.png "Incident Overview Screenshot")
 
 # RUNNING THE QRADAR INCIDENT OVERVIEW
  
