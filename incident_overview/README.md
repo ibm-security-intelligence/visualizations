@@ -3,6 +3,8 @@ This tool allows you to visualize all of the incidents (offenses) on your QRadar
 
 Clicking on an incident bubble allows you to see details of that incident at a glance.
 
+**This project requires APIs only available in QRadar v7.2.5 and later**
+
 ![Alt text](screenshot.png "Incident Overview Screenshot")
 
 # RUNNING THE QRADAR INCIDENT OVERVIEW
