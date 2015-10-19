@@ -26,5 +26,5 @@
 	    <fileset dir="/opt/wlp/lib" includes="postgresql-9.2-1002.jdbc4.jar"/>   
 	</library>
 
-    <webApplication id="offense-viz" location="offense-viz.war" name="offense-viz"/>
+    <webApplication id="offense-viz" location="incident-overview.war" name="offense-viz"/>
 </server>
