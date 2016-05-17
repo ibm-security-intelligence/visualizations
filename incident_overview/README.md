@@ -1,3 +1,8 @@
+# NOW AVAILABLE ON THE IBM SECURITY APP EXCHANGE
+
+The [Incident Overview App](https://exchange.xforce.ibmcloud.com/hub/extension/IBMQRadar:IncidentOverview "Incident Overview App") is now available as an app via the [IBM Security App Exchange] (https://exchange.xforce.ibmcloud.com/hub)!
+
+
 # ABOUT
 This tool allows you to visualize all of the incidents (offenses) on your QRadar installation. Each bubble represents an incident. The size and color of the bubble indicates the magnitude of the incident. Lines dawn between the bubbles indicate there are shared IP addresses among the linked incidents. 
 
