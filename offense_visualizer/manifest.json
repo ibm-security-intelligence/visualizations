@@ -1,0 +1,15 @@
+{
+        "name":"Offense Visualizer",
+        "description":"Offense Visualizer",
+	"version":"0.0.1",
+	"uuid":"98b0706a-d07a-498f-b732-966adc53adff",
+	"log_level":"INFO",
+
+	"areas": [{
+		"url": "static/visualizer.html", 
+		"text": "Offense Visualizer", 
+		"id": "OffenseVisualizer", 
+		"description": "Offense Visualizer"
+	}]
+}
+
