@@ -33,6 +33,7 @@ function getValue( offense, attribute )
 
 function reloadGraph()
 {
+	var csrf = document.cookie.split("QRadarCSRF=").pop().split(";").shift();
  	var token = document.cookie.split("SEC=").pop().split(";").shift();
 	
 	//Get offenses updated in the last 24 hours, maximum 100 results
@@ -40,7 +41,8 @@ function reloadGraph()
 	
 	xhr.header('Accept', "application/json");
 	xhr.header('SEC', token);
-	xhr.header('Version', '3.0');
+	xhr.header('QRadarCSRF', csrf);
+	xhr.header('Version', '4.0');
 	xhr.header('Range', 'items=1-100');
 
 	xhr.get( 
