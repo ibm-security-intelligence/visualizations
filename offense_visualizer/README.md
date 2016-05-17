@@ -19,8 +19,13 @@ The way this sample works is quite simple. We make a request to the "/api/siem/o
 HOW TO DEPLOY
 ===========
 
-To deploy the sample, copy all of the files in this directory (using SCP) to your QRadar server into the location /opt/qradar/webapps/console/offense_visualizer. You can then access the sample at the following URL: https://[QRadar IP]/console/offense_visualizer/visualizer.html - feel free to bookmark this URL for quick reference.
+Method 1, Deploy As App ( 7.2.6 and later only ):
 
+Copy the files to a machine, and run the package_as_app.sh script. The script will prompt you for the QRadar console IP address, as well as the password for the 'admin' user. It will then deploy the visualization as new tab in QRadar.
+
+Method 2, Manual ( pre 7.2.6 ):
+
+To deploy the sample, copy all of the files in this directory (using SCP) to your QRadar server into the location /opt/qradar/webapps/console/offense_visualizer. You can then access the sample at the following URL: https://[QRadar IP]/console/offense_visualizer/visualizer.html - feel free to bookmark this URL for quick reference.
 
 LICENSE
 ===========
